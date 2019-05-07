@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".fragment.PhraseItemFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_toLeftOf="@+id/imbtnFavourite"
+                android:id="@+id/tv_Eng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:text="haha"
+                android:textColor="@android:color/black"
+                />
+
+
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/imbtnFavourite"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_width="30dp"
+                android:background="@drawable/ic_star"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_toLeftOf="@+id/imbtnListen"
+                android:id="@+id/tv_Vi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:text="haha"
+                android:textColor="@android:color/darker_gray"
+                />
+
+
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/imbtnListen"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_width="30dp"
+                android:background="@drawable/ic_volume"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_ReultSpeech"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_speak"
+                android:layout_width="70dp"
+                android:background="@drawable/ic_microphone"
+                android:layout_gravity="center"
+                android:layout_height="70dp" />
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_toLeftOf="@+id/tvPersen"
+                android:indeterminate="false"
+                android:progress="0"
+                android:progressDrawable="@drawable/process_progressbar" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

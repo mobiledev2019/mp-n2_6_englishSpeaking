@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">Learn English</string>
+
+    <string name="facebook_application_id">458403388043645</string>
+    <string name="fb_login_protocol_scheme">fb458403388043645</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="check">Check</string>
+    <string name="correct">Correct</string>
+    <string name="no_answer_selected">No answer selected</string>
+    <string name="not_correct">Incorrect</string>
+
+    <string name="navi_close">Close</string>
+    <string name="navi_open">Open</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_user">User</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="cant_recognize_speech">Không thể nhận dạng giọng nói</string>
+    <string name="exactly">Chính xác</string>
+    <string name="not_exactly">Không phải là :</string>
+    <string name="not_connect_internet">Internet error</string>
+
 </resources>

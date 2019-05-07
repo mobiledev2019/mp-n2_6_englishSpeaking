@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "856743842144",
+    "firebase_url": "https://learning-english-app.firebaseio.com",
+    "project_id": "learning-english-app",
+    "storage_bucket": "learning-english-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856743842144:android:d673299859434bbe",
+        "android_client_info": {
+          "package_name": "com.lamtt.learnenglish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856743842144-tr2r0nr4in6ad0ff3bvufums3pob2tj3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lamtt.learnenglish",
+            "certificate_hash": "75942452ceddc9eccbaadaa7a0cc245e5c19267c"
+          }
+        },
+        {
+          "client_id": "856743842144-ndjj99r74pokbk4dgc7bhafj93miedpc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgLE9z4NfYLHgZdwVpR0fMSPnEw6Cg2SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856743842144-ndjj99r74pokbk4dgc7bhafj93miedpc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
