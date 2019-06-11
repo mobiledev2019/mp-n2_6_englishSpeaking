@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class CategoryAdapter extends BaseAdapter {
     public class ViewHolder {
         ImageView iv_Icon;
         TextView tvTitle;
+        FrameLayout frameLayout;
     }
 
     public CategoryAdapter(Context context, List<Category> categoryList) {
@@ -53,6 +55,7 @@ public class CategoryAdapter extends BaseAdapter {
                     .inflate(R.layout.adapter_category, parent, false);
             this.viewHolder.tvTitle = (TextView) view.findViewById(R.id.tv_vi);
             this.viewHolder.iv_Icon = (ImageView) view.findViewById(R.id.iv_icon);
+            this.viewHolder.frameLayout = view.findViewById(R.id.frame_layout);
             view.setTag(this.viewHolder);
         } else {
             this.viewHolder = (ViewHolder) view.getTag();
@@ -60,7 +63,13 @@ public class CategoryAdapter extends BaseAdapter {
 
         Glide.with(context).load(getImage(categoryList
                 .get(position).getTag())).into(viewHolder.iv_Icon);
+
         this.viewHolder.tvTitle.setText(((Category) this.categoryList.get(position)).getVi());
+        if (categoryList.get(position).getIsActive() == 1) {
+            viewHolder.frameLayout.setVisibility(View.GONE);
+        }else {
+            viewHolder.frameLayout.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

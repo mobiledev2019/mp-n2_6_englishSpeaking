@@ -8,10 +8,13 @@ public class Category {
 
     private String vi;
 
-    public Category(int id, String tag, String vi) {
+    private int isActive;
+
+    public Category(int id, String tag, String vi, int isActive) {
         this.id = id;
         this.tag = tag;
         this.vi = vi;
+        this.isActive = isActive;
     }
 
     public Category() {
@@ -39,5 +42,13 @@ public class Category {
 
     public void setVi(String vi) {
         this.vi = vi;
+    }
+
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
     }
 }

@@ -40,7 +40,6 @@
 
                 <include layout="@layout/header_layout" />
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -64,7 +63,67 @@
                         android:id="@+id/tv_random_quiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Random Quiz"
+                        android:text="Kiểm tra nhanh"
+                        android:textColor="#424242"
+                        android:textSize="18dp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#bdbdbd" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_chart" />
+
+                    <TextView
+                        android:id="@+id/tv_result_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thống kê"
+                        android:textColor="#424242"
+                        android:textSize="18dp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#bdbdbd" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/ic_reminder"
+                        android:layout_marginRight="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_notice_reminder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nhắc nhở"
                         android:textColor="#424242"
                         android:textSize="18dp" />
                 </LinearLayout>
@@ -84,6 +143,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:background="@drawable/ic_signout"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp" />
 
@@ -91,7 +151,7 @@
                         android:id="@+id/tv_sign_out"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sign out"
+                        android:text="Đăng xuất"
                         android:textColor="#424242"
                         android:textSize="18dp" />
                 </LinearLayout>

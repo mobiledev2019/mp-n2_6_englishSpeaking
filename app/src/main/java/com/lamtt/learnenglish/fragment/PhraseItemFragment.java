@@ -16,10 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lamtt.learnenglish.R;
+import com.lamtt.learnenglish.database.DatabaseHelper;
 import com.lamtt.learnenglish.object.Phrase;
 import com.lamtt.learnenglish.utils.Constant;
 
@@ -42,6 +44,8 @@ public class PhraseItemFragment extends Fragment implements View.OnClickListener
     final String TAG = "PhraseItemFragment";
     final int REQUEST_MICROPHONE = 1997;
     TextToSpeech tts;
+    ImageButton imBtnFavourite;
+    DatabaseHelper databaseHelper;
 
     public PhraseItemFragment(Phrase phrase) {
         this.phrase = phrase;
@@ -51,7 +55,7 @@ public class PhraseItemFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        databaseHelper = new DatabaseHelper(getContext());
         Log.d(TAG, "[onCreateView]");
         Speech.init(getActivity(), getActivity().getPackageName());
         Speech.getInstance().setLocale(Locale.US);
@@ -65,10 +69,21 @@ public class PhraseItemFragment extends Fragment implements View.OnClickListener
 
 
         btnSpeak = view.findViewById(R.id.btn_speak);
+        imBtnFavourite = view.findViewById(R.id.imbtnFavourite);
+        imBtnFavourite.setOnClickListener(this);
         btnSpeak.setOnClickListener(this);
         tvEng.setText(phrase.getEnglish());
         tvVi.setText(phrase.getVietnamese());
 
+        Log.d(TAG, "[IS-Favorite] : " + phrase.getFavorite());
+        if (phrase.getFavorite().trim().equals("1")) {
+            Log.d(TAG, "[Favorite] : " + phrase.getFavorite());
+            imBtnFavourite.setBackground(getContext().getDrawable(R.drawable.ic_star_favourite));
+        } else {
+            Log.d(TAG, "[UN-Favorite] : " + phrase.getFavorite());
+            imBtnFavourite.setBackground(getContext().getDrawable(R.drawable.ic_star));
+        }
+        view.findViewById(R.id.imbtnListen).setOnClickListener(this);
         return view;
     }
 
@@ -97,11 +112,19 @@ public class PhraseItemFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.imbtnListen :
-                tts.speak(phrase.getEnglish(), TextToSpeech.QUEUE_FLUSH, null);
+                tts.speak(phrase.getEnglish(), TextToSpeech.QUEUE_FLUSH, null, null);
                 break;
 
             case R.id.imbtnFavourite :
-
+                if (phrase.getFavorite() == "1") {
+                  phrase.setFavorite("0");
+                  databaseHelper.updatePhrase(phrase);
+                  imBtnFavourite.setBackground(getContext().getDrawable(R.drawable.ic_star));
+                } else {
+                    phrase.setFavorite("1");
+                    databaseHelper.updatePhrase(phrase);
+                    imBtnFavourite.setBackground(getContext().getDrawable(R.drawable.ic_star_favourite));
+                }
                 break;
         }
     }

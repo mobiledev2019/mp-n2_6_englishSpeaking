@@ -1,3 +1,0 @@
-B1: Cài đặt SQLiteBrowser
-B2: Open file data.db
-

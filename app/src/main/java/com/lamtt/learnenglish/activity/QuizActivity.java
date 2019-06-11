@@ -16,7 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.lamtt.learnenglish.R;
+import com.lamtt.learnenglish.database.DatabaseFirebase;
 import com.lamtt.learnenglish.database.DatabaseHelper;
 import com.lamtt.learnenglish.object.Phrase;
 import com.lamtt.learnenglish.utils.Constant;
@@ -43,7 +46,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvAnswer4;
     private TextView tvHandleResult;
     private TextView tvQuestion, tvPinyin;
-    private int typeQuestion;
+    private int idCategory = 0;
     private int isAnswer = 0;
     private int rightAnswer = 0;
     private List<Phrase> phraseList = new ArrayList<>();
@@ -64,12 +67,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         databaseHelper = new DatabaseHelper(this);
         tag = getIntent().getStringExtra(Constant.CATEGORY_TAG);
+
         if (tag.equals(Constant.RANDOM_QUIZ_TAG)) {
             Log.d(TAG, "[random quiz]");
             phraseList = databaseHelper.randomListQuiz();
+        } else if (tag.equals("yeuthich")){
+            phraseList = databaseHelper.getListFavourite();
         } else {
             Log.d(TAG, "[topic quiz]");
             phraseList = databaseHelper.getListPhraseByTag(tag);
+            idCategory = databaseHelper.getIdByTag(tag);
+            Log.d(TAG, "[idCategory]_" + idCategory);
+
         }
         Log.d(TAG, "Size : " + phraseList.size());
 
@@ -224,6 +233,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 mChoice = "";
                 if (phraseList.size() == scentenceExitList.size()) {
+                    //Insert result Test vào DB
                     new AlertDialog.Builder(QuizActivity.this)
                             .setTitle("Finish")
                             .setMessage("Result : " + rightAnswer + "/" + phraseList.size())
@@ -242,6 +252,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                                     setQuestion();
                                 }
                             }).show();
+                    insertResult();
+
                 } else {
                     isAnswer++;
                     setQuestion();
@@ -253,6 +265,30 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    private void insertResult() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUid = user.getUid();
+        DatabaseFirebase dbfb = new DatabaseFirebase();
+        dbfb.insertResultTest(userUid, isAnswer + 1, rightAnswer, tag);
+
+        //todo getObject testResultTopic
+
+
+        //todo update testTopicResult
+        if (rightAnswer * 1.0 / phraseList.size() > 0.5) {
+            // numpass += 1
+
+        }else {
+            // numNotpass += 1
+
+
+        }
+
+        //update stautus active
+        if (rightAnswer * 1.0 / phraseList.size() > 0.1) {
+            databaseHelper.updateCategory(idCategory + 1, 1);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -262,5 +298,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        phraseList.clear();
+        scentenceExitList.clear();
+        rightAnswer = 0;
+        isAnswer = 0;
     }
 }

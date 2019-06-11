@@ -1,6 +1,12 @@
 package com.lamtt.learnenglish.activity;
 
+import android.app.AlarmManager;
+import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +32,7 @@ import com.lamtt.learnenglish.adapter.CategoryAdapter;
 import com.lamtt.learnenglish.database.DatabaseHelper;
 import com.lamtt.learnenglish.object.Category;
 import com.lamtt.learnenglish.object.Phrase;
+import com.lamtt.learnenglish.service.ServiceNotice;
 import com.lamtt.learnenglish.utils.Constant;
 
 
@@ -42,10 +50,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     final String TAG = "Home";
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
-    TextView tvRandomQuiz, tvSignout, tvEmailAccount;
+
+    TextView tvRandomQuiz, tvSignout, tvEmailAccount, tvResult, tvNoticeReminder;
+
     String emailAccount = "abc@gmail.com";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +71,29 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "[CATEGORY_TAG] : " + listCategory.get(position).getTag());
-                Intent i = new Intent(Home.this, DetailPhraseActivity.class);
-                i.putExtra(Constant.CATEGORY_TAG, listCategory.get(position).getTag());
-                i.putExtra(Constant.CATEGORY_TITLE, listCategory.get(position).getVi());
-                startActivity(i);
+                if (listCategory.get(position).getIsActive() == 1) {
+                    Intent i = new Intent(Home.this, DetailPhraseActivity.class);
+                    i.putExtra(Constant.CATEGORY_TAG, listCategory.get(position).getTag());
+                    i.putExtra(Constant.CATEGORY_TITLE, listCategory.get(position).getVi());
+                    startActivity(i);
+                } else {
+                    Toast.makeText(Home.this,
+                            "Ban phai hoan thanh bai quiz o chu de " +listCategory.get(position - 1).getVi(),
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listCategory = mDatabaseHelper.getAllCategory();
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, listCategory);
+        gridView.setAdapter(categoryAdapter);
+    }
 
     private void initDataBase() {
         mDatabaseHelper = new DatabaseHelper(this);
@@ -89,10 +110,15 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private void initNavigation() {
         emailAccount = getIntent().getStringExtra(Constant.EMAIL_ACCOUNT);
+        this.tvResult = (TextView) findViewById(R.id.tv_result_btn);
         this.tvRandomQuiz = (TextView) findViewById(R.id.tv_random_quiz);
         this.tvSignout = findViewById(R.id.tv_sign_out);
         tvEmailAccount = findViewById(R.id.email_account);
         tvEmailAccount.setText(emailAccount);
+        tvNoticeReminder = findViewById(R.id.tv_notice_reminder);
+
+        tvNoticeReminder.setOnClickListener(this);
+        tvResult.setOnClickListener(this);
 
         tvRandomQuiz.setOnClickListener(this);
         tvSignout.setOnClickListener(this);
@@ -135,6 +161,17 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 Intent i = new Intent(Home.this, QuizActivity.class);
                 i.putExtra(Constant.CATEGORY_TAG, Constant.RANDOM_QUIZ_TAG);
                 startActivity(i);
+                Log.d(TAG, "CATEGORY_TAG");
+                break;
+
+            case R.id.tv_notice_reminder:
+                showDialogReminderNotice();
+                break;
+
+            case R.id.tv_result_btn:
+                Intent i_result = new Intent(Home.this, ResultActivity.class);
+                startActivity(i_result);
+
                 break;
         }
     }
@@ -151,5 +188,59 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialogReminderNotice(){
+        initAlarm();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        final int minute = sharedPreferences.getInt(Constant.NOTICE_MINUTE, 4);
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_notice_reminder);
+        final EditText edMinute = dialog.findViewById(R.id.edMinute);
+        Button btnStart = dialog.findViewById(R.id.btnStart);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        edMinute.setText(minute+"");
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelAlarm();
+                dialog.dismiss();
+            }
+        });
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo alarm
+                editor.putInt(Constant.NOTICE_MINUTE, Integer.parseInt(edMinute.getText().toString()));
+                editor.commit();
+                startAlarm(minute);
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private static AlarmManager alarmManager;
+    private static PendingIntent pendingIntent;
+
+    private void initAlarm(){
+        Intent intent = new Intent(this, ServiceNotice.class);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        pendingIntent =
+                PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private void startAlarm(int minute){
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+                1000 * 15 * minute, pendingIntent);
+    }
+
+    private void cancelAlarm(){
+        alarmManager.cancel(pendingIntent);
     }
 }

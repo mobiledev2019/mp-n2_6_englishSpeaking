@@ -100,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                 //Insert DB
                 DatabaseFirebase dbfb = new DatabaseFirebase();
                 dbfb.insertUser(user);
-                dbfb.insertResultTest(userUid);
                 Intent i = new Intent(LoginActivity.this, Home.class);
+//                Intent i = new Intent(LoginActivity.this, ResultActivity.class);
                 i.putExtra(Constant.EMAIL_ACCOUNT, user.getEmail());
                 startActivity(i);
                 finish();

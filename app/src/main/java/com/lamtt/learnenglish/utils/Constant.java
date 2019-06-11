@@ -12,6 +12,14 @@ public class Constant {
     public static final String CATEGORY_TITLE = "category_title";
     public static final String EMAIL_ACCOUNT = "email_account";
     public static final String RANDOM_QUIZ_TAG = "random_quiz";
+    public static final String BROADCAST_SPEAK = "com.lamtt.broadcastspeak";
+    public static final String BROADCAST_TEXT_SPEAK = "text_speak";
+    public static final String NOTICE_MINUTE = "minute_notice";
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public static void showToat(Context context, String str) {
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }

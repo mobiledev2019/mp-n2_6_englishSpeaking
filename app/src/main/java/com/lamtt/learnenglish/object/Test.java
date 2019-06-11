@@ -1,28 +1,32 @@
 package com.lamtt.learnenglish.object;
 
 public class Test {
-    private int testId;
-    private int numberQuestions;
-    private int trueAnswers;
+    private String testId;
+    private int isAnswer;
+    private int trueAnswer;
     private long time; // Đơn vị là (s)
 
-    public Test(int testId, int numberQuestions, int trueAnswers, long time) {
+    public Test() {
+
+    }
+
+    public Test(String testId, int isAnswer, int trueAnswer, long time) {
         this.testId = testId;
-        this.numberQuestions = numberQuestions;
-        this.trueAnswers = trueAnswers;
+        this.isAnswer = isAnswer;
+        this.trueAnswer = trueAnswer;
         this.time = time;
     }
 
-    public int getTestId() {
+    public String getTestId() {
         return testId;
     }
 
-    public int getNumberQuestions() {
-        return numberQuestions;
+    public int getIsAnswer() {
+        return isAnswer;
     }
 
-    public int getTrueAnswers() {
-        return trueAnswers;
+    public int getTrueAnswer() {
+        return trueAnswer;
     }
 
 

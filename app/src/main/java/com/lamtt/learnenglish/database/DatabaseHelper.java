@@ -117,14 +117,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             categoryList.add(new Category(cursor.getInt(0),
-                    cursor.getString(1), cursor.getString(2)));
+                    cursor.getString(1), cursor.getString(2),
+                    cursor.getInt(3)));
             cursor.moveToNext();
         }
 
         cursor.close();
         close();
         return categoryList;
+    }
 
+    public int getNumCategoryActive(){
+        try {
+            openDataBase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        List<Category> categoryList = new ArrayList<>();
+        String sql = "Select * from topic where active = 1 ";
+        Cursor cursor = myDataBase.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            categoryList.add(new Category(cursor.getInt(0),
+                    cursor.getString(1), cursor.getString(2),
+                    cursor.getInt(3)));
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        close();
+        return categoryList.size();
+    }
+
+    public int getSizeCategory(){
+        return getAllCategory().size();
     }
 
     public List<Phrase> getListPhraseByTag(String tag) {
@@ -151,6 +177,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return phraseList;
     }
 
+    public List<Phrase> getListFavourite(){
+        try {
+            openDataBase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        List<Phrase> phraseList = new ArrayList<>();
+        String sql = "Select * from phrases where  favorite = '1'";
+        Cursor cursor = myDataBase.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            phraseList.add(new Phrase(cursor.getInt(0),
+                    cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4),
+                    cursor.getString(5), cursor.getString(6)));
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        close();
+        return phraseList;
+    }
 
     public void updatePhrase(Phrase phrase) {
         try {
@@ -160,10 +208,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         ContentValues ct = new ContentValues();
         ct.put("favorite", phrase.getFavorite());
-        myDataBase.update("phrases", ct, "idphrases=" + phrase.getIdPhrase(), null);
+        int k = myDataBase.update("phrases", ct, "idphrases=" + phrase.getIdPhrase(), null);
+        close();
+        Log.d("Update", k + "___////");
+    }
+
+    public void updateCategory(int id , int active){
+        try {
+            openDataBase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ContentValues ct = new ContentValues();
+        ct.put("active", active);
+        myDataBase.update("topic", ct, "id=" +  id, null);
         close();
     }
 
+    public int getIdByTag(String tag){
+        int id = 0;
+        try {
+            openDataBase();
+            String sql = "Select * from topic where unsignvi = '" + tag + "'";
+            Cursor cursor = myDataBase.rawQuery(sql, null);
+            cursor.moveToFirst();
+            id = cursor.getInt(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        close();
+        return id;
+    }
 
     public List<Phrase> randomListQuiz() {
         try {

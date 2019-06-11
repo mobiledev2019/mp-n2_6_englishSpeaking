@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lamtt.learnenglish.R;
 import com.lamtt.learnenglish.adapter.PageAdapter;
@@ -42,7 +43,11 @@ public class DetailPhraseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         databaseHelper = new DatabaseHelper(this);
-        phraseList = databaseHelper.getListPhraseByTag(strCategoryTag);
+        if (strCategoryTag.trim().equals("yeuthich")) {
+            phraseList = databaseHelper.getListFavourite();
+        } else {
+            phraseList = databaseHelper.getListPhraseByTag(strCategoryTag);
+        }
         Log.d(TAG, "[Phrase size] : " + phraseList.size());
 
         viewPager = findViewById(R.id.view_pager);
@@ -62,10 +67,14 @@ public class DetailPhraseActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.menu_practice) {
 
-            Intent i = new Intent(DetailPhraseActivity.this, QuizActivity.class);
-            i.putExtra(Constant.CATEGORY_TAG, strCategoryTag);
-            startActivity(i);
-
+            if (phraseList.size() > 4) {
+                Intent i = new Intent(DetailPhraseActivity.this, QuizActivity.class);
+                i.putExtra(Constant.CATEGORY_TAG, strCategoryTag);
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "Qua it du lieu de quiz",
+                        Toast.LENGTH_SHORT).show();
+            }
         } else if (item.getItemId() == android.R.id.home){
             finish();
         }
