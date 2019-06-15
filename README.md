@@ -7,7 +7,7 @@ BÁO CÁO BÀI TẬP LỚN MÔN PHÁT TRIỂN ỨNG DỤNG CHO CÁC THIẾT BỊ
 Nhóm: 06 _ STT: 3 Thành viên:
 
     Họ và tên: Lê Tuấn Hiệp Mã sinh viên: B15DCCN209
-    Họ và tên: Trần Thế Lâm Mã sinh viên: B15DCSCN296
+    Họ và tên: Trần Thế Lâm Mã sinh viên: B15DCCN296
     Họ và tên: Nguyễn Nam Anh Mã sinh viên: B15DCCN021
 
 Nội Dung: 
