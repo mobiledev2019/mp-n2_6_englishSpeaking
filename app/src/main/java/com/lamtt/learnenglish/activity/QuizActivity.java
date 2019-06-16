@@ -45,7 +45,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvAnswer3;
     private TextView tvAnswer4;
     private TextView tvHandleResult;
-    private TextView tvQuestion, tvPinyin;
+    private TextView tvQuestion, tvPinyin, tvPercent;
     private int idCategory = 0;
     private int isAnswer = 0;
     private int rightAnswer = 0;
@@ -89,6 +89,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         this.btnListen.setOnClickListener(this);
         this.tvPinyin = findViewById(R.id.tv_pinyin);
         this.tvQuestion = (TextView) findViewById(R.id.tv_question);
+        this.tvPercent = findViewById(R.id.tv_percent);
         this.tvAnswer1 = (TextView) findViewById(R.id.tv_answer1);
         this.tvAnswer2 = (TextView) findViewById(R.id.tv_answer2);
         this.tvAnswer3 = (TextView) findViewById(R.id.tv_answer3);
@@ -153,13 +154,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         resetBackground();
 
         this.btnCheck.setBackground(getResources().getDrawable(R.drawable.bg_button_is_data_null));
+
         do {
             this.fistQtion = this.random.nextInt(number);
         } while (checkVocaExist(this.fistQtion));
         this.tvQuestion.setText((phraseList.get(this.fistQtion)).getEnglish());
 
         scentenceExitList.add(Integer.valueOf(this.fistQtion));
-
+        tvPercent.setText(scentenceExitList.size() + "/" + phraseList.size() );
         do {
             this.secondQtion = this.random.nextInt(number);
         } while (this.secondQtion == this.fistQtion);
@@ -271,18 +273,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         DatabaseFirebase dbfb = new DatabaseFirebase();
         dbfb.insertResultTest(userUid, isAnswer + 1, rightAnswer, tag);
 
-        //todo getObject testResultTopic
-
-
-        //todo update testTopicResult
-        if (rightAnswer * 1.0 / phraseList.size() > 0.5) {
-            // numpass += 1
-
-        }else {
-            // numNotpass += 1
-
-
-        }
+//        //todo getObject testResultTopic
+//
+//
+//        //todo update testTopicResult
+//        if (rightAnswer * 1.0 / phraseList.size() > 0.5) {
+//            // numpass += 1
+//
+//        }else {
+//            // numNotpass += 1
+//
+//
+//        }
 
         //update stautus active
         if (rightAnswer * 1.0 / phraseList.size() > 0.1) {
@@ -309,3 +311,4 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         isAnswer = 0;
     }
 }
+

@@ -30,11 +30,22 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/btnListen"
+            android:layout_toLeftOf="@+id/tv_percent"
             android:gravity="left"
             android:padding="5dp"
             android:text="aaa"
             android:textColor="#424242"
             android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            android:layout_alignParentRight="true"
+            android:textSize="17dp"
+            android:text="20/100"
+            android:layout_centerVertical="true"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
     <TextView
         android:layout_below="@id/rela_listen"

@@ -45,4 +45,5 @@ Nội Dung:
         Ver 1.0: Tạo giao diện
         Ver 2.0: Đăng ký, đăng nhập, chi tiết các chủ đề, 
         Ver 3.0: Thống kê kết quả học tập, thông báo ngẫu nhiên từ, Khóa một số chủ đề.
+   Môi trường demo : Hệ điều hành Android, Android version 5.0 trở lên
 
