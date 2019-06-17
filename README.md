@@ -27,8 +27,9 @@ Nội Dung:
 	        - Chi tiết cho mỗi chủ đề mỗi màn hình bao gồm phát âm, ghi âm,..
 	        - Cho phép kiểm tra ngẫu nhiên, kiểm tra theo bài học.
 	        - Thông báo từ ngẫu nhiên trong chủ đề ngẫu nhiên.
+		- Lưu trữ thống kê kết quả các bài kiểm tra của người dùng.
         3.2. Kỹ thuật sử dụng:
-            - Firebase
+            - Firebase (đăng nhập qua các dịch vụ mạng xã hội, lưu trữ kết quả người dùng)
 	        - Sqlite
 	        - AlarmManager
 	        - Notification
