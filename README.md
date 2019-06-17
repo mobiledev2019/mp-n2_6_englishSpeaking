@@ -11,6 +11,7 @@ Nhóm: 06 _ STT: 3 Thành viên:
     Họ và tên: Nguyễn Nam Anh Mã sinh viên: B15DCCN021
 
 Nội Dung: 
+
     Mục tiêu: 
 	+ Hỗ trợ việc học tiếng Anh nghe, đọc, nói thông qua việc học theo câu.
 	+ Nhắc nhở người dùng học thường xuyên.
